@@ -49,7 +49,10 @@ export function useQuiz() {
   const getSortedScores = () => {
     return ARCHETYPES
       .map(k => ({ key: k, score: state.scores[k] }))
-      .sort((a, b) => b.score - a.score);
+      .sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return Math.random() - 0.5; // random shuffle on tie
+      });
   };
 
   return { state, start, nextIntroScene, startQuiz, answer, showResult, restart, getSortedScores };
